@@ -3,10 +3,12 @@ import 'package:flutter/services.dart';
 
 class PlayerFormScreen extends StatefulWidget {
   final Function(String fullName, int age, int jerseyNumber) onSave;
+  final VoidCallback onCancel;
 
   const PlayerFormScreen({
     Key? key,
     required this.onSave,
+    required this.onCancel,
   }) : super(key: key);
 
   @override
@@ -40,13 +42,11 @@ class _PlayerFormScreenState extends State<PlayerFormScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: widget.onCancel,
+        ),
         title: const Text('Добавить игрока'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.save),
-            onPressed: _submit,
-          ),
-        ],
       ),
       body: Form(
         key: _formKey,
@@ -99,6 +99,10 @@ class _PlayerFormScreenState extends State<PlayerFormScreen> {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _submit,
+        child: const Icon(Icons.save),
       ),
     );
   }
